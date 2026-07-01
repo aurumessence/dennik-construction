@@ -98,7 +98,49 @@
     min-height:40px;
   }
   .nav-cta:hover{background:var(--orange);color:var(--navy) !important;}
-  .burger{display:none;}
+  .burger{
+    display:none;
+    background:none;border:none;cursor:pointer;
+    width:32px;height:24px;position:relative;
+    z-index:110;
+  }
+  .burger span{
+    display:block;position:absolute;left:0;width:100%;height:2px;
+    background:var(--concrete-2);border-radius:2px;
+    transition:transform .3s ease, opacity .3s ease, top .3s ease;
+  }
+  .burger span:nth-child(1){top:2px;}
+  .burger span:nth-child(2){top:11px;}
+  .burger span:nth-child(3){top:20px;}
+  .burger.open span:nth-child(1){transform:rotate(45deg);top:11px;}
+  .burger.open span:nth-child(2){opacity:0;}
+  .burger.open span:nth-child(3){transform:rotate(-45deg);top:11px;}
+  .mobile-nav{
+    position:fixed;top:0;right:0;width:300px;height:100vh;z-index:105;
+    background:var(--navy);
+    border-left:1px solid var(--line);
+    padding:100px 36px 36px;
+    display:flex;flex-direction:column;gap:8px;
+    transform:translateX(100%);
+    transition:transform .35s cubic-bezier(.2,.7,.3,1);
+    overflow-y:auto;
+  }
+  .mobile-nav.open{transform:translateX(0);}
+  .mobile-nav a{
+    color:var(--concrete-2);font-family:'IBM Plex Mono';font-size:15px;
+    letter-spacing:0.08em;text-transform:uppercase;opacity:0.85;
+    padding:14px 0;border-bottom:1px solid var(--line);
+    transition:opacity .25s;
+  }
+  .mobile-nav a:hover{opacity:1;color:var(--orange);}
+  .mobile-nav .nav-cta{margin-top:12px;text-align:center;}
+  .mobile-overlay{
+    position:fixed;inset:0;z-index:102;
+    background:rgba(14,19,26,0.6);
+    opacity:0;pointer-events:none;
+    transition:opacity .35s ease;
+  }
+  .mobile-overlay.open{opacity:1;pointer-events:auto;}
 
   /* ===== HERO ===== */
   .hero{
@@ -407,17 +449,14 @@
     .steps::before{display:none;}
     .contact-grid{grid-template-columns:1fr;gap:54px;}
     header{padding:16px 22px;}
-    nav.links{display:flex;flex-wrap:wrap;gap:12px 16px;justify-content:flex-end;}
-    nav.links a{font-size:11px;}
-    .nav-cta{padding:8px 12px;}
+    nav.links{display:none;}
+    .burger{display:block;}
     .foot-inner{flex-direction:column;align-items:flex-start;}
   }
   @media(max-width:600px){
     .wrap{padding:0 22px;}
-    header{padding:16px 22px;flex-wrap:wrap;gap:10px 14px;}
+    header{padding:16px 22px;}
     .brand img{height:36px;}
-    .brand .bname{font-size:18px;}
-    nav.links{width:100%;justify-content:flex-start;gap:10px 12px;}
     .hero-content{padding:0 22px 50px;}
     .hero h1{font-size:clamp(38px,11vw,60px);} 
     .hero-actions{flex-direction:column;align-items:flex-start;}
@@ -449,7 +488,19 @@
     <a href="#process">Process</a>
     <a href="#contact" class="nav-cta">Get a Quote</a>
   </nav>
+  <button class="burger" id="burger" aria-label="Toggle navigation menu">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<nav class="mobile-nav" id="mobile-nav">
+  <a href="#top">Home</a>
+  <a href="#services">Services</a>
+  <a href="#work">Work</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="#process">Process</a>
+  <a href="#contact" class="nav-cta">Get a Quote</a>
+</nav>
 
 <section class="hero">
   <div class="hero-img hero-slide-1"></div>
@@ -721,6 +772,40 @@
     const message = chatInput.value.trim();
     if (!message) return;
     sendMessage(message);
+  });
+
+  /* Mobile menu toggle */
+  const burger = document.getElementById('burger');
+  const mobileNav = document.getElementById('mobile-nav');
+  const mobileOverlay = document.getElementById('mobile-overlay');
+  const mobileLinks = mobileNav.querySelectorAll('a');
+
+  function openMobileMenu() {
+    burger.classList.add('open');
+    mobileNav.classList.add('open');
+    mobileOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileMenu() {
+    burger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    mobileOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  burger.addEventListener('click', () => {
+    if (mobileNav.classList.contains('open')) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  });
+
+  mobileOverlay.addEventListener('click', closeMobileMenu);
+
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
   });
 </script>
 
