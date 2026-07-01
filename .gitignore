@@ -1,1 +1,8 @@
 @echo off`n*.tmp`n.DS_Store`nThumbs.db
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
