@@ -63,16 +63,15 @@
     position:fixed;top:0;left:0;right:0;z-index:100;
     display:flex;align-items:center;justify-content:space-between;
     padding:18px 40px;
-    background:rgba(14,19,26,0.82);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-    transition:padding .3s ease;
+    background:rgba(14,19,26,0.15);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    transition:padding .3s ease, background .3s ease;
   }
-  .brand{display:flex;align-items:center;gap:12px;color:var(--concrete-2);text-decoration:none;}
-  .brand img{height:44px;width:auto;max-width:140px;}
-  .brand .bname{font-family:'Big Shoulders Display';font-weight:700;font-size:22px;letter-spacing:0.02em;}
-  .brand .bname span{color:var(--orange);}
-  nav.links{display:flex;gap:34px;}
+  .brand{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--concrete-2);text-decoration:none;}
+  .brand img{height:75px;width:auto;max-width:250px;}
+  .brand .bname{display:none;}
+  nav.links{display:flex;align-items:center;gap:34px;}
   nav.links a{
     color:var(--concrete-2);
     font-family:'IBM Plex Mono';
@@ -93,6 +92,10 @@
     color:var(--orange) !important;
     padding:9px 18px;
     font-size:12px !important;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:40px;
   }
   .nav-cta:hover{background:var(--orange);color:var(--navy) !important;}
   .burger{display:none;}
@@ -111,7 +114,13 @@
     background-image:url('images/building.jpeg');
     background-size:cover;background-position:center 30%;
     filter:saturate(0.9) contrast(1.02);
+    opacity:1;
+    transition:opacity 1.2s ease;
   }
+  .hero-img.hero-slide-2{background-image:url('images/building-01.jpeg');}
+  .hero-img.hero-slide-3{background-image:url('images/building-02.jpeg');}
+  .hero-img.hero-slide-4{background-image:url('images/building-03.jpeg');}
+  .hero-img.is-hidden{opacity:0;}
   .hero-overlay{
     position:absolute;inset:0;
     background:linear-gradient(180deg, rgba(14,19,26,0.55) 0%, rgba(14,19,26,0.35) 35%, rgba(14,19,26,0.92) 92%);
@@ -429,7 +438,7 @@
 
 <header>
   <a class="brand" href="#top" aria-label="Go to home page">
-    <img src="images/logo_main.png" alt="Dennik Construction logo">
+    <img src="images/logo_main_white.png" alt="Dennik Construction logo">
     <div class="bname">DENN<span>IK</span></div>
   </a>
   <nav class="links">
@@ -443,7 +452,10 @@
 </header>
 
 <section class="hero">
-  <div class="hero-img"></div>
+  <div class="hero-img hero-slide-1"></div>
+  <div class="hero-img hero-slide-2 is-hidden"></div>
+  <div class="hero-img hero-slide-3 is-hidden"></div>
+  <div class="hero-img hero-slide-4 is-hidden"></div>
   <div class="hero-overlay"></div>
   <div class="grid-bg-dark"></div>
   <div class="scroll-cue"><span>Scroll</span><span class="ln"></span></div>
@@ -601,7 +613,7 @@
 <footer>
   <div class="wrap foot-inner">
     <div class="foot-brand">
-      <img src="images/logo_main.png" alt="Dennik logo">
+      <img src="images/logo_main_white.png" alt="Dennik logo">
       <span>DENNIK CONSTRUCTION (PVT) LTD</span>
     </div>
     <div class="foot-links">
@@ -629,6 +641,15 @@
 </div>
 
 <script>
+  const heroSlides = Array.from(document.querySelectorAll('.hero-img'));
+  let activeSlide = 0;
+  setInterval(() => {
+    const current = heroSlides[activeSlide];
+    current.classList.add('is-hidden');
+    activeSlide = (activeSlide + 1) % heroSlides.length;
+    heroSlides[activeSlide].classList.remove('is-hidden');
+  }, 5000);
+
   const revealEls = document.querySelectorAll('.reveal, .roofline.reveal-line');
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
