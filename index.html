@@ -68,8 +68,8 @@
     border-bottom:1px solid var(--line);
     transition:padding .3s ease;
   }
-  .brand{display:flex;align-items:center;gap:12px;color:var(--concrete-2);}
-  .brand img{height:40px;width:auto;}
+  .brand{display:flex;align-items:center;gap:12px;color:var(--concrete-2);text-decoration:none;}
+  .brand img{height:44px;width:auto;max-width:140px;}
   .brand .bname{font-family:'Big Shoulders Display';font-weight:700;font-size:22px;letter-spacing:0.02em;}
   .brand .bname span{color:var(--orange);}
   nav.links{display:flex;gap:34px;}
@@ -354,7 +354,7 @@
   }
   .foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
   .foot-brand{display:flex;align-items:center;gap:10px;}
-  .foot-brand img{height:28px;}
+  .foot-brand img{height:32px;width:auto;max-width:120px;}
   .foot-brand span{font-family:'Big Shoulders Display';font-size:16px;color:var(--concrete-2);}
   .foot-links{display:flex;gap:26px;font-family:'IBM Plex Mono';font-size:11.5px;text-transform:uppercase;letter-spacing:0.05em;}
   .foot-copy{font-family:'IBM Plex Mono';font-size:11px;}
@@ -397,15 +397,25 @@
     .steps{grid-template-columns:repeat(2,1fr);row-gap:44px;}
     .steps::before{display:none;}
     .contact-grid{grid-template-columns:1fr;gap:54px;}
-    nav.links{display:none;}
+    header{padding:16px 22px;}
+    nav.links{display:flex;flex-wrap:wrap;gap:12px 16px;justify-content:flex-end;}
+    nav.links a{font-size:11px;}
+    .nav-cta{padding:8px 12px;}
     .foot-inner{flex-direction:column;align-items:flex-start;}
   }
   @media(max-width:600px){
     .wrap{padding:0 22px;}
-    header{padding:16px 22px;}
+    header{padding:16px 22px;flex-wrap:wrap;gap:10px 14px;}
+    .brand img{height:36px;}
+    .brand .bname{font-size:18px;}
+    nav.links{width:100%;justify-content:flex-start;gap:10px 12px;}
     .hero-content{padding:0 22px 50px;}
+    .hero h1{font-size:clamp(38px,11vw,60px);} 
+    .hero-actions{flex-direction:column;align-items:flex-start;}
+    .btn{width:100%;justify-content:center;}
     .svc-grid{grid-template-columns:1fr;}
     .form .frow{grid-template-columns:1fr;}
+    .contact-meta .cm-row{flex-direction:column;gap:4px;}
     .scroll-cue{display:none;}
   }
 
@@ -419,7 +429,7 @@
 
 <header>
   <a class="brand" href="#top" aria-label="Go to home page">
-    <img src="images/logo.jpeg" alt="Dennik Construction logo">
+    <img src="images/logo_main.png" alt="Dennik Construction logo">
     <div class="bname">DENN<span>IK</span></div>
   </a>
   <nav class="links">
@@ -591,7 +601,7 @@
 <footer>
   <div class="wrap foot-inner">
     <div class="foot-brand">
-      <img src="images/logo.jpeg" alt="Dennik logo">
+      <img src="images/logo_main.png" alt="Dennik logo">
       <span>DENNIK CONSTRUCTION (PVT) LTD</span>
     </div>
     <div class="foot-links">
